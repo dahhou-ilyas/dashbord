@@ -1,10 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.views import View
 from django.http import JsonResponse
 from django.contrib.auth.models import User
+from django.contrib.auth import logout
 import json
 from validate_email import validate_email
-from django.contrib import messages
+from django.contrib import messages,auth
+from django.core.mail import EmailMessage
 
 # Create your views here.
 class UsernameValidation(View):
@@ -56,8 +58,45 @@ class RegistrationView(View):
                     return render(request,'authentication/registre.html',context)
                 user=User.objects.create_user(username=username,email=email)
                 user.set_password(password)
+                user.is_active=True
                 user.save()
+                print(user.is_active)
+                # eemail=EmailMessage(
+                #     'active your account',
+                #     "Test",
+                #     "noreply@semycolon.com",
+                #     [email]
+                #     )
+                # eemail.send(fail_silently=False)
                 messages.success(request,'account succefule create')
                 return render(request,'authentication/registre.html')
             
         return render(request,'authentication/registre.html')
+    
+class LoginView(View):
+    def get(self,request):
+        return render(request,'authentication/login.html')
+    
+    def post(self,request):
+        username=request.POST['username']
+        password=request.POST['password']
+        print(username,password)
+        if username and password:
+            user=auth.authenticate(username=username,password=password)
+            if user:
+                if user.is_active:
+                    auth.login(request,user)
+                    messages.success(request,'Welcome, '+user.get_username()+' You are now login')
+                    return redirect('expenses')
+                messages.error(request,'account is not active')    
+                return render(request,'authentication/login.html')
+            messages.error(request,'accoutn not found')    
+            return render(request,'authentication/login.html')
+        messages.error(request,'fill all feild')    
+        return render(request,'authentication/login.html')
+    
+class LogoutView(View):
+    def post(self,request):
+        logout(request)
+        messages.success(request,'you have been logout')
+        return redirect('login')

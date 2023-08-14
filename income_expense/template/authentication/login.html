@@ -2,12 +2,57 @@
 {% load static %}
 
 {% block content %}
+<div class="row ">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+      <div class="card mt-5">
+  
+  
+        <div class="card-body" id="ee">
+          <div class="card-title py-3">
+            <h4>Register for a free account</h4>
+          </div>
+          
+          <form action="{% url 'login' %}" method="post">
 
-<div class="card">
-    <div class="card-body">
-        <h1>login</h1>
+            {% csrf_token %}
+
+            {% include 'partials/_message.html' %}
+
+            <div class="form-group">
+              <input
+                type="text"
+                name="username"
+                placeholder="username"
+                id="usernameField"
+                value="{{fieldValue.username}}"
+                class="form-control form-control-sm"
+              />
+            </div>
+            
+            <br>
+            <div class="form-group">
+              <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                class="form-control form-control-sm"
+                id="passwordField"
+              />
+              <small class="float-right py-3 showPasswordToggle">SHOW</small>
+            </div>
+            <input type="submit" value="Login" class="my-3 btn btn-block btn-primary submit-btn" />
+          </form>
+  
+        </div>
+  
+        </div>
+      </div>
     </div>
+    <div class="col-md-4"></div>
+  </div>
 
-</div>
+<script src="{% static 'js/registre.js' %}"></script>
 
-{% endblock %}
+
+{% endblock content %}
