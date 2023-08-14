@@ -2,19 +2,32 @@ const usernameField=document.querySelector('#usernameField')
 const usernamefedbackArea=document.querySelector('.invalid_feedback')
 const emailField=document.querySelector('#emailField')
 const emailFeedBackArea=document.querySelector('.emailFeedBackArea')
+const showPasswordToggle=document.querySelector('.showPasswordToggle')
+const passwordField=document.querySelector('#passwordField')
+console.log(passwordField)
 
-console.log('111111111111111111111111111111111');
+showPasswordToggle.addEventListener('click',(e)=>{
+    if(showPasswordToggle.textContent=='SHOW'){
+        showPasswordToggle.textContent='HIDE'
+
+        passwordField.setAttribute("type","text")
+
+    }else{
+        showPasswordToggle.textContent='SHOW'
+        passwordField.setAttribute('type',"password")
+    }
+})
+
 emailField.addEventListener('keyup',(e)=>{
     const emailVal=e.target.value
     if(emailVal!=''){
-        console.log('xxxxxxxx');
         fetch('/authentication/valide-email',{
             body:JSON.stringify({email:emailVal}),
             method:'POST',
         
         }).then(res=>{
             res.json().then(data=>{
-                console.log(data);
+                console.log(444);
                 if(data.email_error){
                     emailField.classList.add('is-invalid')
                     emailFeedBackArea.style.display='block'
