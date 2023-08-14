@@ -12,10 +12,6 @@
           <div class="card-title py-3">
             <h4>Register for a free account</h4>
           </div>
-
-          
-           
-
           
           <form action="{% url 'registre' %}" method="post">
 
@@ -29,7 +25,7 @@
                 name="username"
                 placeholder="username"
                 id="usernameField"
-                value=""
+                value="{{fieldValue.username}}"
                 class="form-control form-control-sm"
               />
             </div>
@@ -43,7 +39,7 @@
                 placeholder="Email"
                 class="form-control form-control-sm"
                 id="emailField"
-                value=""
+                value="{{fieldValue.email}}"
               />
             </div>
   

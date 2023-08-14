@@ -40,10 +40,24 @@ class RegistrationView(View):
         return render(request,'authentication/registre.html')
     
     def post(self,request):
+        #get data, validate user, create account
+        username=request.POST['username']
+        email=request.POST['email']
+        password=request.POST['password']
         
-        messages.success(request,'Success whatsapp')
-        messages.warning(request,'Success whatsapp')
-        messages.info(request,'Success whatsapp')
-        messages.error(request,'Success whatsapp')
-    
+        context={
+            'fieldValue':request.POST
+        }
+        
+        if not User.objects.filter(username=username).exists():
+            if not User.objects.filter(email=email):
+                if(len(password))<6:
+                    messages.error(request,'password too short')
+                    return render(request,'authentication/registre.html',context)
+                user=User.objects.create_user(username=username,email=email)
+                user.set_password(password)
+                user.save()
+                messages.success(request,'account succefule create')
+                return render(request,'authentication/registre.html')
+            
         return render(request,'authentication/registre.html')
