@@ -4,4 +4,4 @@ __pycache__/
 *.pyo
 *.pyd
 
-.env
+income_expense/.env
