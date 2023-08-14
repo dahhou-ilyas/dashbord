@@ -6,6 +6,8 @@ name = "pypi"
 [packages]
 django = "*"
 psycopg2 = "*"
+validate-email = "*"
+python-dotenv = "*"
 
 [dev-packages]
 
