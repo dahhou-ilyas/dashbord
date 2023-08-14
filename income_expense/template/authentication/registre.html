@@ -12,7 +12,17 @@
           <div class="card-title py-3">
             <h4>Register for a free account</h4>
           </div>
-          <form action="" method="post">
+
+          
+           
+
+          
+          <form action="{% url 'registre' %}" method="post">
+
+            {% csrf_token %}
+
+            {% include 'partials/_message.html' %}
+
             <div class="form-group">
               <input
                 type="text"
@@ -64,4 +74,4 @@
 <script src="{% static 'js/registre.js' %}"></script>
 
 
-{% endblock %}
+{% endblock content %}

@@ -4,7 +4,7 @@ from django.http import JsonResponse
 from django.contrib.auth.models import User
 import json
 from validate_email import validate_email
-
+from django.contrib import messages
 
 # Create your views here.
 class UsernameValidation(View):
@@ -37,4 +37,13 @@ class EmailValidation(View):
     
 class RegistrationView(View):
     def get(self,request):
+        return render(request,'authentication/registre.html')
+    
+    def post(self,request):
+        
+        messages.success(request,'Success whatsapp')
+        messages.warning(request,'Success whatsapp')
+        messages.info(request,'Success whatsapp')
+        messages.error(request,'Success whatsapp')
+    
         return render(request,'authentication/registre.html')

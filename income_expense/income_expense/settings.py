@@ -9,8 +9,10 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
+from django.contrib import messages
 
 from pathlib import Path
+
 import os
 from dotenv import load_dotenv
 load_dotenv()
@@ -117,6 +119,10 @@ USE_I18N = True
 
 USE_TZ = True
 
+#setting sur massage pour cohérence avec bootstrap
+# DEFAULT_TAGS={
+#     messages.ERROR:"danger"
+# }
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
@@ -128,3 +134,4 @@ STATIC_ROOT=os.path.join(BASE_DIR,'static')
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
