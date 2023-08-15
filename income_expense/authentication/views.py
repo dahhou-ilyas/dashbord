@@ -60,7 +60,6 @@ class RegistrationView(View):
                 user.set_password(password)
                 user.is_active=True
                 user.save()
-                print(user.is_active)
                 # eemail=EmailMessage(
                 #     'active your account',
                 #     "Test",
@@ -75,12 +74,12 @@ class RegistrationView(View):
     
 class LoginView(View):
     def get(self,request):
+        print(request.user.is_authenticated)
         return render(request,'authentication/login.html')
     
     def post(self,request):
         username=request.POST['username']
         password=request.POST['password']
-        print(username,password)
         if username and password:
             user=auth.authenticate(username=username,password=password)
             if user:

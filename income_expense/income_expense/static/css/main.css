@@ -64,6 +64,6 @@
 .bd-mode-toggle {
   z-index: 1500;
 }
-small{
+.showPasswordToggle{
   cursor: pointer;
 }
