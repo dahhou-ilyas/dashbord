@@ -16,14 +16,15 @@ def index(request):
     }
     return render(request,'expenses/index.html',context)
 
+@login_required(login_url="/authentication/login")
+@never_cache
 def add_expences(request):
     category=Category.objects.all()
     context={
         'categories':category,
         'values':request.POST
     }
-
-
+    
     if request.method=='POST':
         amount=request.POST['amount']
         description=request.POST['description']
@@ -39,6 +40,47 @@ def add_expences(request):
                                category=categori,description=description)
         messages.success(request,'Expense saved succesffuly')
         return redirect('expenses')
-    return render(request,'expenses/add_expense.html',context)
-        
     
+    return render(request,'expenses/add_expense.html',context)
+
+
+
+@login_required(login_url="/authentication/login")
+@never_cache
+def expense_edit(request,id):
+    category=Category.objects.all()
+    expense=Expense.objects.get(pk=id)
+    context={
+        'expense':expense,
+        'values':expense,
+        'categories':category
+    }
+    
+    if request.method=="POST":
+        amount=request.POST['amount']
+        description=request.POST['description']
+        expense_date=request.POST['expense_date']
+        categori=request.POST['category']
+        if not amount:
+            messages.error(request,'Ammount is required')
+            return render(request,'expenses/edit-expense.html',context)
+        if not description:
+            messages.error(request,'description is required')
+            return render(request,'expenses/edit-expense.html',context)
+        
+        expense.owner=request.user
+        expense.amount=amount
+        expense.date=expense_date
+        expense.category=categori
+        expense.description=description
+        expense.save()
+        messages.success(request,'Expense Update succesffuly')
+        return redirect('expenses')
+    
+    return render(request,'expenses/edit-expense.html',context)
+
+def delet_expense(request,id):
+    expense=Expense.objects.get(pk=id)
+    expense.delete()
+    messages.success(request,'Expense Delet succesffuly')
+    return redirect('expenses')
