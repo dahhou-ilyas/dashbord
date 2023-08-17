@@ -68,6 +68,25 @@
                     {% endfor %}
                 </tbody>
             </table>
+          </div>
+
+            <div class="table-output">
+              <table class="table table-stripped table-hover">
+                <thead>
+                  <tr>
+                    <th>Amount ({{currency}})</th>
+                    <th>Category</th>
+                    <th>Description</th>
+                    <th>Date</th>
+                    <th></th>
+                  </tr>
+                </thead>
+            
+                <tbody class="table-body">
+                  
+                </tbody>
+              </table>
+            </div>
             
             <div class="pagination-container">
               <div class="">
@@ -86,11 +105,10 @@
               
               
               </ul>
+              {% endif %}
             </div>
 
-
-            {% endif %}
-        </div>
+        
     </div>
 </div>
 
