@@ -11,6 +11,7 @@ searchField.addEventListener('keyup',(e)=>{
 
     if(searchValur.trim().length>0){
         pagination_container.style.display="none";
+        table_body.innerHTML=""
 
         fetch('/search',{
             body:JSON.stringify({searchText:searchValur}),
