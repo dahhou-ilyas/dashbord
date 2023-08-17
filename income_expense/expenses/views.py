@@ -4,7 +4,19 @@ from django.views.decorators.cache import never_cache
 from .models import Category,Expense
 from django.contrib import messages
 from django.core.paginator import Paginator
+import json
+from django.http import JsonResponse
 # Create your views here.
+
+def search_expenses(request):
+    if request.method=="POST":
+        
+        search_str=json.loads(request.body).get('searchText')
+       
+        expenses=Expense.objects.filter(amount__istartswith=search_str,owner=request.user) | Expense.objects.filter(date__istartswith=search_str,owner=request.user) | Expense.objects.filter(description__icontains=search_str,owner=request.user) | Expense.objects.filter(category__icontains=search_str,owner=request.user)
+    
+    data=expenses.values()
+    return JsonResponse(list(data),safe=False)
 
 @login_required(login_url="/authentication/login")
 @never_cache
@@ -14,7 +26,6 @@ def index(request):
     paginator=Paginator(expenses,3)
     page_number=request.GET.get("page")
     page_obj=Paginator.get_page(paginator,page_number)
-    
     
     context={
         'expenses':expenses,
@@ -36,6 +47,7 @@ def add_expences(request):
         description=request.POST['description']
         expense_date=request.POST['expense_date']
         categori=request.POST['category']
+        
         if not amount:
             messages.error(request,'Ammount is required')
             return render(request,'expenses/add_expense.html',context)
