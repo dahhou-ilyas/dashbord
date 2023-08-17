@@ -2,7 +2,10 @@ version: '3'
 services:
   web:
     build: .
-    command: ["pipenv", "run", "python", "income_expense/manage.py", "runserver", "0.0.0.0:8000"]
+    command:
+      - bash
+      - -c
+      - "pipenv run python income_expense/manage.py migrate && pipenv run python income_expense/manage.py runserver 0.0.0.0:8000"
     volumes:
       - .:/app
     ports:
