@@ -46,3 +46,4 @@ searchField.addEventListener('keyup',(e)=>{
         app_table.style.display="block";
     }
 })
+
