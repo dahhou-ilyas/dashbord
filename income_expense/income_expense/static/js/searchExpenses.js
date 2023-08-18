@@ -23,7 +23,7 @@ searchField.addEventListener('keyup',(e)=>{
                 app_table.style.display="none";
                 table_output.style.display="block";
                 if(data.length===0){
-                    table_output.innerHTML="no result"
+                    table_output.innerHTML="no result found"
                 }else{
                     data.forEach(item=>{
                         table_body.innerHTML+=`
