@@ -13,7 +13,7 @@
             <h4>Register for a free account</h4>
           </div>
           
-          <form action="{% url 'login' %}" method="post">
+          <form action="{% url 'login' %}" method="post" id="form">
 
             {% csrf_token %}
 
@@ -41,11 +41,16 @@
               />
               <small class="float-right py-3 showPasswordToggle">SHOW</small>
             </div>
-            <input type="submit" value="Login" class="my-3 btn btn-block btn-primary submit-btn" />
+            <input type="submit" value="Login" class="my-3 btn btn-block btn-primary submit-btn" id="submit-btn"/>
           </form>
   
         </div>
-  
+        <div id="ask">
+          <a href="{% url 'registre' %}">Register</a>
+        </div>
+        <div id="ask">
+          <a href="{% url 'request-password' %}">Forget password</a>
+        </div>
         </div>
       </div>
     </div>
