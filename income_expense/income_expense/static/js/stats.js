@@ -1,11 +1,15 @@
 
-const chartType=['bubble','bar','doughnut','line','polarArea','radar','scatter']
-let type='bar'
-let typeCount=0
+const chartType=['bar','doughnut','line','polarArea','radar']
+
+var currentIndex = parseInt(localStorage.getItem("currentIndex")) || 0;
+
+
 const count=document.querySelector('.count')
+
 count.addEventListener('click',()=>{
-    type=chartType[(typeCount++)%chartType.length]
-    getChartData(type);
+    currentIndex = (currentIndex + 1) % chartType.length;
+    localStorage.setItem("currentIndex", currentIndex.toString());
+    location.reload();
 })
 
 const renderChart = (data, labels,type) => {
@@ -49,11 +53,12 @@ const renderChart = (data, labels,type) => {
   };
   
   const getChartData = (type) => {
+    
+    
     console.log("fetching");
     fetch("/expense_category_summary")
       .then((res) => res.json())
       .then((results) => {
-        console.log("results", results);
         const category_data = results.expense_category_data;
         const [labels, data] = [
           Object.keys(category_data),
@@ -63,4 +68,5 @@ const renderChart = (data, labels,type) => {
         renderChart(data, labels,type);
       }).catch(e=>console.log("error"));
   };
-getChartData(type);
+
+document.onload = getChartData(chartType[currentIndex]);
