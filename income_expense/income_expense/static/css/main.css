@@ -83,5 +83,23 @@
 #submit-btn{
   width: 25%;
   text-align: center;
+  
 }
 
+.count{
+  align-items: center;
+  width: 30%;
+  margin-top: 14px;
+  border-radius: 25px;
+}
+
+#myChart{
+  margin: 0 auto;
+}
+.stats{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  
+}
