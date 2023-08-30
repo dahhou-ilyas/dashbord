@@ -7,6 +7,7 @@ from django.core.paginator import Paginator
 import json
 from django.http import JsonResponse
 from userpreferences.models import UserPreference
+import datetime
 # Create your views here.
 
 def search_expenses(request):
@@ -105,3 +106,27 @@ def delet_expense(request,id):
     expense.delete()
     messages.success(request,'Expense Delet succesffuly')
     return redirect('expenses')
+
+def expense_category_summary(request):
+    today_date=datetime.date.today()
+    six_months_ago=today_date-datetime.timedelta(days=30*6)
+    expenses=Expense.objects.filter(date__gte=six_months_ago,date_lte=today_date)
+    finalrep = {}
+    def get_catogory(expense):
+        return expense.category
+    
+    category_list=list(set(map(get_catogory,expenses)))
+    
+    def get_expense_category_amount(category):
+        amount = 0
+        filtered_by_category = expenses.filter(category=category)
+
+        for item in filtered_by_category:
+            amount += item.amount
+        return amount
+    
+    for x in expenses:
+        for y in category_list:
+            finalrep[y]=get_expense_category_amount(y)
+    
+    return JsonResponse({'expense_category_data': finalrep}, safe=False)
